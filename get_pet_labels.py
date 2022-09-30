@@ -40,22 +40,29 @@ def get_pet_labels(image_dir):
       List. The list contains for following item:
          index 0 = pet image label (string)
     """
-    results_dic={}
+   results_dic={}
 
     dir_list = listdir(image_dir)
     
     for fname in dir_list:
-        label=fname.lower().split('_')
+        if fname[0] != ".":
+            label=fname.lower().split('_')
 
-        label2=label[:-1]   
+            for word in label:
 
-        label3=(' ').join(label2)    
+                label2=""
+                if word.isalpha()==False:
+                    label.remove(word)
 
-        label4=label3.strip()
+                label2=(' ').join(label)
 
-    if fname not in results_dic:
-        results_dic[fname]=[label4]
-    else:
-        print('duplicate filename {} found with value {}.'.format(fname, results_dic.get(fname)))
+
+                label3=label2.strip()
+
+        if fname not in results_dic:
+            results_dic[fname]=[label3]
+        else:
+            print('duplicate filename {} found with value {}.'.format(fname, results_dic.get(fname)))
+
     return results_dic
-
+   
